@@ -15,19 +15,19 @@ module.exports = function(controller) {
 
 
 
-    controller.on('facebook_postback', async(bot, message) => {
-        await bot.reply(message,`I heard you posting back a post_back about ${ message.text }`);
+    // controller.on('facebook_postback', async(bot, message) => {
+    //     await bot.reply(message,`I heard you posting back a post_back about ${ message.text }`);
+    // });
+
+
+    controller.on('facebook_postback', async (bot, message) => {
+        await bot.reply(message, 'post_back');
     });
 
-    controller.on('message', async(bot, message) => {
-        await bot.reply(message, {
-          text: 'Choose a button',
-          get_started:
-              {
-                      locale:"default",
-                      text:"Hello!!"
 
-              }
+    controller.on('message', async (bot, message) => {
+      await bot.reply(message, {
+        text: 'Message',
       });
     });
 

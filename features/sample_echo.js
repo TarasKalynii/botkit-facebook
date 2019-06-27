@@ -30,14 +30,6 @@ module.exports = function(controller) {
         await bot.reply(message, "I'm fine!");
     });
 
-    controller.hears(['hello', 'hi'],'message', async(bot, message) => {
-        await bot.reply(message, 'Nice to meet you!');
-    });
-
-    controller.hears('menu','message', async(bot, message) => {
-        await bot.reply(message, "I haven't got menu.");
-    });
-
     controller.hears('name','message', async(bot, message) => {
         await bot.reply(message, "I'm Taras Bot.");
     });
