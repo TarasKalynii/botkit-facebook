@@ -1,7 +1,6 @@
 const Purchase = require('../models/purchase');
 const User = require('../models/user');
 
-
 module.exports = function (controller) {
   controller.hears(async message => message.text && message.text.includes('BUY_'), 'facebook_postback', async (bot, message) => {
     const sku = message.text.slice(4, 11);

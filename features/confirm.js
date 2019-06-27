@@ -7,7 +7,7 @@ module.exports = function (controller) {
     if (user.freeProducts === 0 && message.text === 'Get free') {
       await bot.reply(message, 'Invite friends, please!');
     } else {
-      let freeProducts = user.freeProducts;
+      let { freeProducts } = user;
       let purchase_method = false;
       if (user.freeProducts > 0 && message.text === 'Get free') {
         purchase_method = true;

@@ -1,5 +1,5 @@
-const User = require('../models/user');
 const bby = require('bestbuy')('TGp7jkZIbKOzfRTDzkofjo2O');
+const User = require('../models/user');
 
 module.exports = function (controller) {
   function getFilterString(favoriteProductList) {
