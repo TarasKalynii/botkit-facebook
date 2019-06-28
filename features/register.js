@@ -23,6 +23,30 @@ module.exports = function (controller) {
         await bot.reply(message, { text: 'Link is activated!' });
       }
     }
-    await bot.reply(message, { text: 'Hello!' });
+    await bot.reply(message, {
+      text: 'Hello!',
+      quick_replies: [
+        {
+          content_type: 'text',
+          title: 'My purchases',
+          payload: 'true',
+        },
+        {
+          content_type: 'text',
+          title: 'Shop',
+          payload: 'false',
+        },
+        {
+          content_type: 'text',
+          title: 'Favorites',
+          payload: 'false',
+        },
+        {
+          content_type: 'text',
+          title: 'To invite a friend',
+          payload: 'false',
+        },
+      ],
+    });
   });
 };
