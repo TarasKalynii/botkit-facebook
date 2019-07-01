@@ -38,21 +38,25 @@ module.exports = function (controller) {
   }
 
   controller.hears(async message => !message.text && message.message.attachments[0].payload.coordinates.lat, 'message', async (bot, message) => {
-    if (await Purchase.findOne({ userId: message.sender.id, ended: false })) {
-      const { lat } = message.message.attachments[0].payload.coordinates;
-      const { long } = message.message.attachments[0].payload.coordinates;
-      await Purchase.findOneAndUpdate(
-        { userId: message.sender.id, ended: false },
-        { lat, long },
-      );
-      const user = await User.findOne({ id: message.sender.id });
+    try {
+      if (await Purchase.findOne({ userId: message.sender.id, ended: false })) {
+        const { lat } = message.message.attachments[0].payload.coordinates;
+        const { long } = message.message.attachments[0].payload.coordinates;
+        await Purchase.findOneAndUpdate(
+          { userId: message.sender.id, ended: false },
+          { lat, long },
+        );
+        const user = await User.findOne({ id: message.sender.id });
 
-      await bot.reply(message, {
-        text: 'Confirm!',
-        quick_replies: createQuickRepliesList(user.freeProducts),
-      });
-    } else {
-      await bot.reply(message, { text: 'Please chose product!' });
+        await bot.reply(message, {
+          text: 'Confirm!',
+          quick_replies: createQuickRepliesList(user.freeProducts),
+        });
+      } else {
+        await bot.reply(message, { text: 'Please chose product!' });
+      }
+    } catch (error) {
+      await bot.reply(message, { text: 'Something was wrong. Try again.' });
     }
   });
 };

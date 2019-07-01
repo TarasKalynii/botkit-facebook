@@ -44,27 +44,28 @@ module.exports = function (controller) {
 
   controller.hears(async message => message.text && message.text.includes('INFO_'), 'facebook_postback', async (bot, message) => {
     const sku = message.text.slice(5, 12);
-    // console.log(sku);
-    await bby.products(`sku=${sku}`, { show: 'sku,name,salePrice,image,url,shortDescription' }).then(async (data) => {
-    // console.log(data.products[0]);
-      const result = await User.findOne({ id: message.sender.id, favoriteProductList: sku });
-      await bot.reply(message, {
-        attachment: {
-          type: 'template',
-          payload: {
-            template_type: 'generic',
-            elements: [createElementsForPoduct(data, result)],
+    try {
+      await bby.products(`sku=${sku}`, { show: 'sku,name,salePrice,image,url,shortDescription' }).then(async (data) => {
+        const result = await User.findOne({ id: message.sender.id, favoriteProductList: sku });
+        await bot.reply(message, {
+          attachment: {
+            type: 'template',
+            payload: {
+              template_type: 'generic',
+              elements: [createElementsForPoduct(data, result)],
+            },
           },
-        },
-        quick_replies: [
-          {
-            content_type: 'text',
-            title: 'Main menu',
-            payload: 'MAIN_MENU',
-          },
-        ],
+          quick_replies: [
+            {
+              content_type: 'text',
+              title: 'Main menu',
+              payload: 'MAIN_MENU',
+            },
+          ],
+        });
       });
-    });
-    // await bot.reply(message,{ text: 'Something.' });
+    } catch (error) {
+      await bot.reply(message, { text: 'Something was wrong. Try again.' });
+    }
   });
 };

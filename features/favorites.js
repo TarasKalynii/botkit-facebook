@@ -35,28 +35,32 @@ module.exports = function (controller) {
 
 
   controller.hears('Favorites', 'message', async (bot, message) => {
-    const user = await User.findOne({ id: message.sender.id });
-    if (user.favoriteProductList.length !== 0) {
-      await bby.products(getFilterString(user.favoriteProductList), { show: 'sku,name,salePrice,image,url,shortDescription' }).then(async (data) => {
-        await bot.reply(message, {
-          attachment: {
-            type: 'template',
-            payload: {
-              template_type: 'generic',
-              elements: getElementsForProductsList(data),
+    try {
+      const user = await User.findOne({ id: message.sender.id });
+      if (user.favoriteProductList.length !== 0) {
+        await bby.products(getFilterString(user.favoriteProductList), { show: 'sku,name,salePrice,image,url,shortDescription' }).then(async (data) => {
+          await bot.reply(message, {
+            attachment: {
+              type: 'template',
+              payload: {
+                template_type: 'generic',
+                elements: getElementsForProductsList(data),
+              },
             },
-          },
-          quick_replies: [
-            {
-              content_type: 'text',
-              title: 'Main menu',
-              payload: 'MAIN_MENU',
-            },
-          ],
+            quick_replies: [
+              {
+                content_type: 'text',
+                title: 'Main menu',
+                payload: 'MAIN_MENU',
+              },
+            ],
+          });
         });
-      });
-    } else {
-      await bot.reply(message, 'Please add something.');
+      } else {
+        await bot.reply(message, 'Please add something.');
+      }
+    } catch (error) {
+      await bot.reply(message, { text: 'Something was wrong. Try again.' });
     }
   });
 };

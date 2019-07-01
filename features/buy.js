@@ -4,16 +4,20 @@ const User = require('../models/user');
 module.exports = function (controller) {
   controller.hears(async message => message.text && message.text.includes('BUY_'), 'facebook_postback', async (bot, message) => {
     const sku = message.text.slice(4, 11);
-    const user = await User.findOne({ id: message.sender.id });
-    if (!(await Purchase.findOne({ userId: message.sender.id, ended: false }))) {
-      await Purchase.create({
-        userDBId: user._id, userId: message.sender.id, ended: false, sku, timestamps: true, phoneNumber: '+0000000000'
-      });
-    } else {
-      await Purchase.findOneAndUpdate(
-        { userId: message.sender.id, ended: false },
-        { sku },
-      );
+    try {
+      const user = await User.findOne({ id: message.sender.id });
+      if (!(await Purchase.findOne({ userId: message.sender.id, ended: false }))) {
+        await Purchase.create({
+          userDBId: user._id, userId: message.sender.id, ended: false, sku, timestamps: true, phoneNumber: '+0000000000'
+        });
+      } else {
+        await Purchase.findOneAndUpdate(
+          { userId: message.sender.id, ended: false },
+          { sku },
+        );
+      }
+    } catch (error) {
+      await bot.reply(message, { text: 'Something was wrong. Try again.' });
     }
     await bot.reply(message, {
       text: 'Get your phone number!',

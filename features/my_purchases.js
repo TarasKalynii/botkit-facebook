@@ -29,27 +29,30 @@ module.exports = function (controller) {
   }
 
   controller.hears('My purchases', 'message', async (bot, message) => {
-    const user = await User.findOne({ id: message.sender.id }).populate({ path: 'purchases' });
-    if (user.purchases.length > 0) {
-      await bot.reply(message, {
-        attachment: {
-          type: 'template',
-          payload: {
-            template_type: 'generic',
-            elements: getPurchaseList(user.purchases),
+    try {
+      const user = await User.findOne({ id: message.sender.id }).populate({ path: 'purchases' });
+      if (user.purchases.length > 0) {
+        await bot.reply(message, {
+          attachment: {
+            type: 'template',
+            payload: {
+              template_type: 'generic',
+              elements: getPurchaseList(user.purchases),
+            },
           },
-        },
-        quick_replies: [
-          {
-            content_type: 'text',
-            title: 'Main menu',
-            payload: 'MAIN_MENU',
-          },
-        ],
-      });
-    } else {
-      await bot.reply(message, { text: 'Please buy something!' });
+          quick_replies: [
+            {
+              content_type: 'text',
+              title: 'Main menu',
+              payload: 'MAIN_MENU',
+            },
+          ],
+        });
+      } else {
+        await bot.reply(message, { text: 'Please buy something!' });
+      }
+    } catch (error) {
+      await bot.reply(message, { text: 'Something was wrong. Try again.' });
     }
-    // await bot.reply(message, { text: 'Please buy something!' });
   });
 };
