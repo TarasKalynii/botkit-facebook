@@ -32,7 +32,7 @@ module.exports = function (controller) {
     try {
       const user = await User.findOne({ id: message.sender.id }).populate({ path: 'purchases' });
       if (user.purchases.length > 0) {
-        await bot.reply(message, {
+        bot.reply(message, {
           attachment: {
             type: 'template',
             payload: {
@@ -49,10 +49,10 @@ module.exports = function (controller) {
           ],
         });
       } else {
-        await bot.reply(message, { text: 'Please buy something!' });
+        bot.reply(message, { text: 'Please buy something!' });
       }
     } catch (error) {
-      await bot.reply(message, { text: 'Something was wrong. Try again.' });
+      bot.reply(message, { text: 'Something was wrong. Try again.' });
     }
   });
 };

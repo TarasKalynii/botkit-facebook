@@ -17,9 +17,9 @@ module.exports = function (controller) {
         );
       }
     } catch (error) {
-      await bot.reply(message, { text: 'Something was wrong. Try again.' });
+      bot.reply(message, { text: 'Something was wrong. Try again.' });
     }
-    await bot.reply(message, {
+    bot.reply(message, {
       text: 'Get your phone number!',
       quick_replies: [
         {

@@ -28,7 +28,7 @@ module.exports = function (controller) {
   controller.hears('Best-selling', 'message', async (bot, message) => {
     try {
       await bby.products('onlineAvailability=true', { show: 'sku,name,salePrice,salesRankMediumTerm,image', sort: 'salesRankMediumTerm.asc' }).then(async (data) => {
-        await bot.reply(message, {
+        bot.reply(message, {
           attachment: {
             type: 'template',
             payload: {
@@ -39,7 +39,7 @@ module.exports = function (controller) {
         });
       });
     } catch (error) {
-      await bot.reply(message, { text: 'Something was wrong. Try again.' });
+      bot.reply(message, { text: 'Something was wrong. Try again.' });
     }
   });
 };

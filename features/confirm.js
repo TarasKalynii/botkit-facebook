@@ -23,10 +23,10 @@ module.exports = function (controller) {
           { userId: message.sender.id, ended: false },
           { ended: true, free: purchase_method },
         );
-        await bot.reply(message, 'Congratulations! Our courier will contact you!');
+        bot.reply(message, 'Congratulations! Our courier will contact you!');
       }
     } catch (error) {
-      await bot.reply(message, { text: 'Something was wrong. Try again.' });
+      bot.reply(message, { text: 'Something was wrong. Try again.' });
     }
   });
 };

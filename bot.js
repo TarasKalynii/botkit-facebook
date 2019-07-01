@@ -6,12 +6,8 @@
 
 // Import Botkit's core features
 const { Botkit } = require('botkit');
-// const { BotkitConversation } = require('botkit');
-const { BotkitCMSHelper } = require('botkit-plugin-cms');
-// const bby = require('bestbuy')('TGp7jkZIbKOzfRTDzkofjo2O');
 // Using Node.js `require()`
 const mongoose = require('mongoose');
-
 
 // Import a platform-specific adapter for facebook.
 
@@ -21,7 +17,6 @@ const { MongoDbStorage } = require('botbuilder-storage-mongodb');
 
 // Load process.env values from .env file
 require('dotenv').config();
-
 
 let storage = null;
 if (process.env.MONGO_URI) {

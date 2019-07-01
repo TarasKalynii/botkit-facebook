@@ -9,8 +9,8 @@ module.exports = function (controller) {
         { $pull: { favoriteProductList: sku } },
       );
     } catch (error) {
-      await bot.reply(message, { text: 'Something was wrong. Try again.' });
+      bot.reply(message, { text: 'Something was wrong. Try again.' });
     }
-    await bot.reply(message, { text: 'It was deleted.' });
+    bot.reply(message, { text: 'It was deleted.' });
   });
 };

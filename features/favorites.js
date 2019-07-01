@@ -39,7 +39,7 @@ module.exports = function (controller) {
       const user = await User.findOne({ id: message.sender.id });
       if (user.favoriteProductList.length !== 0) {
         await bby.products(getFilterString(user.favoriteProductList), { show: 'sku,name,salePrice,image,url,shortDescription' }).then(async (data) => {
-          await bot.reply(message, {
+          bot.reply(message, {
             attachment: {
               type: 'template',
               payload: {
@@ -57,10 +57,10 @@ module.exports = function (controller) {
           });
         });
       } else {
-        await bot.reply(message, 'Please add something.');
+        bot.reply(message, 'Please add something.');
       }
     } catch (error) {
-      await bot.reply(message, { text: 'Something was wrong. Try again.' });
+      bot.reply(message, { text: 'Something was wrong. Try again.' });
     }
   });
 };

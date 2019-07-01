@@ -48,15 +48,15 @@ module.exports = function (controller) {
         );
         const user = await User.findOne({ id: message.sender.id });
 
-        await bot.reply(message, {
+        bot.reply(message, {
           text: 'Confirm!',
           quick_replies: createQuickRepliesList(user.freeProducts),
         });
       } else {
-        await bot.reply(message, { text: 'Please chose product!' });
+        bot.reply(message, { text: 'Please chose product!' });
       }
     } catch (error) {
-      await bot.reply(message, { text: 'Something was wrong. Try again.' });
+      bot.reply(message, { text: 'Something was wrong. Try again.' });
     }
   });
 };

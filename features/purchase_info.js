@@ -30,7 +30,7 @@ module.exports = function (controller) {
     try {
       const purchase = await Purchase.findById(id);
       await bby.products(`sku=${purchase.sku}`, { show: 'sku,name,salePrice,image,url,shortDescription' }).then(async (data) => {
-        await bot.reply(message, {
+        bot.reply(message, {
           attachment: {
             type: 'template',
             payload: {
@@ -48,7 +48,7 @@ module.exports = function (controller) {
         });
       });
     } catch (error) {
-      await bot.reply(message, { text: 'Something was wrong. Try again.' });
+      bot.reply(message, { text: 'Something was wrong. Try again.' });
     }
   });
 };
